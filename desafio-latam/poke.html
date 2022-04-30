@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <input type="text" placeholder="Ingresa el nombre del pokemon" />
+      <button>Enviar</button>
+    </form>
+    <style>
+      #resultado {
+        width: 500px;
+        height: 500px;
+        background: black;
+      }
+    </style>
+    <div id="resultado"></div>
+
+    <script>
+      const form = document.querySelector("form");
+      const input = document.querySelector("input");
+      const resultado = document.querySelector("#resultado");
+      form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const nombrePokemon = input.value;
+          const pokeInfo = await getPokemonByName(nombrePokemon);
+          const sprites = pokeInfo.sprites;
+          const imagen = sprites.front_default;
+          resultado.innerHTML = `<img src="${imagen}" />`;
+      });
+
+      const getPokemonByName = async (name) => {
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+        const data = res.json();
+        return data;
+      };
+    </script>
+  </body>
+</html>
